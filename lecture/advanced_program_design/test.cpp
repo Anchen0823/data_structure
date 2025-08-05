@@ -1,29 +1,15 @@
 #include <iostream>
-#include <vector>
-#include <stack>
-using namespace std;
+#include <random>
+#include <chrono>
 
-long long maximumTripletValue(vector<int>& nums) {
-    long long result = 0;
-    long long temp;
-    int len = nums.size();
-    for (int i=0;i<len-2;i++) {
-        long n1 = nums[i];
-        for (int j=i;j<len-1;j++) {
-            long n2 = nums[j];
-            for (int k=j;k<len;k++) {
-                long n3 = nums[k];
-                temp = (n1 - n2) * n3;
-                if (temp > result) {
-                    result = temp;
-                }
-            }
-        }
-    }
-    return result;
-}
-
-int main() {
-    vector<int> nums = {10, 13, 6, 2};
-    cout << maximumTripletValue(nums);
+bool fiftyPercentChance() {
+    // 使用当前时间作为随机种子
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937 generator(seed);
+    
+    // 创建一个0到1的均匀分布
+    std::uniform_int_distribution<int> distribution(0, 1);
+    
+    // 返回true或false，各有50%概率
+    return distribution(generator) == 1;
 }
