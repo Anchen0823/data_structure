@@ -62,7 +62,8 @@
         "queue": "cpp",
         "string.h": "c",
         "climits": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "git.ignoreLimitWarning": true
