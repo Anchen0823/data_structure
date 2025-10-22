@@ -24,29 +24,40 @@ int playOneRound() {
     return 0;
 }
 
+// playGame函数模拟抛硬币游戏，连续抛出硬币，直到出现“反正正”或“反反正”序列，分别返回1或0。
 int playGame() {
+    int last1 = -1, last2 = -1;
     while (true) {
-        int result = playOneRound();
-        if (result == 0) {
-            int result2 = playOneRound();
-            int result3 = playOneRound();
-            if (result2 == 1 && result3 == 1) {
-                return 1; // 反正正
-            } else if (result2 == 0 && result3 == 1) {
-                return 0; // 反反正
-            }
+        int current = playOneRound();
+        if (last2 == 0 && last1 == 1 && current == 1) {
+            return 1;   // 反正正
         }
+        if (last2 == 0 && last1 == 0 && current == 1) {
+            return 0;   // 反反正
+        }
+        last2 = last1;
+        last1 = current;
     }
 }
 
 int main() {
-    for (int i = 0; i < 10; ++i) {
+    int fzz = 0, ffz = 0;
+    int times = 1000000;
+    for (int i = 0; i < times; ++i) {
         int finalResult = playGame();
         if (finalResult == 1) {
             std::cout << "游戏结果：反正正" << std::endl;
+            fzz++;
         } else {
             std::cout << "游戏结果：反反正" << std::endl;
+            ffz++;
         }
     }
+
+    std::cout << std::endl;
+    std::cout << "反正正出现次数：" << fzz << std::endl;
+    std::cout << "反反正出现次数：" << ffz << std::endl;
+    std::cout << "反正正概率：" << static_cast<double>(fzz) / times << std::endl;
+    std::cout << "反反正概率：" << static_cast<double>(ffz) / times << std::endl;
     return 0;
 }
